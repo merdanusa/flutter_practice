@@ -10,6 +10,6 @@ class StartScreen extends StatefulWidget {
 class _StartScreenState extends State<StartScreen> {
   @override
   Widget build(BuildContext context) {
-    return Text("Hello, World!");
+    return Container(child: Text("Hello, World!"));
   }
 }
