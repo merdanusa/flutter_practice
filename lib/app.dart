@@ -14,7 +14,7 @@ class _AppState extends State<App> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
-      home: Container(child: StartScreen()),
+      home: StartScreen(),
     );
   }
 }
