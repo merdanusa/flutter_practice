@@ -1,43 +1,88 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/hobbies_screen.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
+import 'package:flutter_application_1/screens/welcome_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
-class MainScaffold extends StatefulWidget {
-  const MainScaffold({super.key});
+// Define the router
+final GoRouter router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      name: 'welcome',
+      builder: (context, state) => const WelcomeScreen(),
+    ),
+
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return ScaffoldWithBottomNavBar(navigationShell: navigationShell);
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/tasks',
+              name: 'tasks',
+              builder: (context, state) => const HomeScreen(),
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/hobbies',
+              name: 'hobbies',
+              builder: (context, state) => const HobbiesScreen(),
+            ),
+          ],
+        ),
+      ],
+    ),
+  ],
+);
+
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
-  State<MainScaffold> createState() => _MainScaffoldState();
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: 'Task Manager',
+      theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(),
+        brightness: Brightness.light,
+        primaryColor: Colors.white,
+        useMaterial3: true,
+      ),
+      debugShowCheckedModeBanner: false,
+      routerConfig: router,
+    );
+  }
 }
 
-class _MainScaffoldState extends State<MainScaffold> {
-  int _currentIndex = 0;
+class ScaffoldWithBottomNavBar extends StatelessWidget {
+  const ScaffoldWithBottomNavBar({super.key, required this.navigationShell});
 
-  final List<String> _routes = ['/home', '/home/hobbies'];
-
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    GoRouter.of(context).go(_routes[index]); // navigate to route
-  }
+  final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Router(
-        routerDelegate: GoRouter.of(context).routerDelegate,
-        backButtonDispatcher: GoRouter.of(context).backButtonDispatcher,
-      ),
+      body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped,
+        currentIndex: navigationShell.currentIndex,
+        onTap: (index) {
+          navigationShell.goBranch(
+            index,
+            initialLocation: index == navigationShell.currentIndex,
+          );
+        },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports_handball),
-            label: 'Hobbies',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.task_alt), label: 'Tasks'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Hobbies'),
         ],
       ),
     );
