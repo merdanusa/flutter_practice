@@ -5,7 +5,6 @@ import 'package:flutter_application_1/screens/welcome_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
-// Define the router
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
