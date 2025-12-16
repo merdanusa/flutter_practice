@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
               placeholder: 'What needs to be done?',
             ),
             const SizedBox(height: 16),
-            Button(onPressed: _addTask, label: 'Add Task'),
+            Button(onPressed: _addTask, label: 'Add Task', primary: false),
             const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
