@@ -1,48 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/hobbies_screen.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
-import 'package:flutter_application_1/screens/welcome_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
-final GoRouter router = GoRouter(
-  initialLocation: '/',
-  routes: [
-    GoRoute(
-      path: '/',
-      name: 'welcome',
-      builder: (context, state) => const WelcomeScreen(),
-    ),
-    GoRoute(
-      path: '/home',
-      name: 'home',
-      builder: (context, state) => const HomeScreen(),
-      routes: [
-        GoRoute(
-          path: 'hobbies',
-          name: 'hobbies',
-          builder: (context, state) => const HobbiesScreen(),
-        ),
-      ],
-    ),
-  ],
-);
+class MainScaffold extends StatefulWidget {
+  const MainScaffold({super.key});
 
-class App extends StatelessWidget {
-  const App({super.key});
+  @override
+  State<MainScaffold> createState() => _MainScaffoldState();
+}
+
+class _MainScaffoldState extends State<MainScaffold> {
+  int _currentIndex = 0;
+
+  final List<String> _routes = ['/home', '/home/hobbies'];
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    GoRouter.of(context).go(_routes[index]); // navigate to route
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Task Manager',
-      theme: ThemeData(
-        textTheme: GoogleFonts.poppinsTextTheme(),
-        brightness: Brightness.light,
-        primaryColor: Colors.white,
-        useMaterial3: true,
+    return Scaffold(
+      body: Router(
+        routerDelegate: GoRouter.of(context).routerDelegate,
+        backButtonDispatcher: GoRouter.of(context).backButtonDispatcher,
       ),
-      debugShowCheckedModeBanner: false,
-      routerConfig: router,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onTabTapped,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports_handball),
+            label: 'Hobbies',
+          ),
+        ],
+      ),
     );
   }
 }
