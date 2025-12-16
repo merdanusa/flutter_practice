@@ -12,7 +12,10 @@ class _AppState extends State<App> {
   Widget build(context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Text("Hello, World!")),
+      home: Scaffold(
+        appBar: AppBar(centerTitle: true, title: const Text('Home')),
+        body: Center(child: TextButton(child: Text("Run"))),
+      ),
     );
   }
 }
