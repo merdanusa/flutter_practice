@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_application_1/models/task.dart';
 import 'package:flutter_application_1/data/tasks.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +12,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _controller = TextEditingController();
+  List<Task> _tasks = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _tasks = List.from(tasks);
+  }
 
   @override
   void dispose() {
@@ -61,11 +69,20 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
             FilledButton.icon(
               onPressed: () {
-                final task = _controller.text.trim();
-                if (task.isNotEmpty) {
+                final taskText = _controller.text.trim();
+                if (taskText.isNotEmpty) {
+                  final newTask = Task(
+                    id: _tasks.length + 1,
+                    title: taskText,
+                    isCompleted: false,
+                  );
+                  setState(() {
+                    _tasks.add(newTask);
+                  });
                   _controller.clear();
                 }
               },
+
               icon: const Icon(Icons.add, size: 28),
               label: const Text(
                 'Add Task',
@@ -81,10 +98,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            const Expanded(
-              child: Center(child: Column(children: [
-              
-            ],)),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _tasks.length,
+                itemBuilder: (context, index) {
+                  final task = _tasks[index];
+                  return ListTile(
+                    title: Text(task.title),
+                    leading: Checkbox(
+                      value: task.isCompleted,
+                      onChanged: (value) {
+                        setState(() {
+                          task.isCompleted = value!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
