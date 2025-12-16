@@ -10,6 +10,9 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(context) {
-    return MaterialApp(home: Scaffold(body: Text("Hello, World!")));
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(body: Text("Hello, World!")),
+    );
   }
 }
