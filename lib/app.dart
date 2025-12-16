@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/welcome_screen.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -18,9 +19,7 @@ class _AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(centerTitle: true, title: const Text('Home')),
-        body: Center(
-          child: TextButton(onPressed: () {}, child: Text("Run")),
-        ),
+        body: WelcomeScreen(),
       ),
     );
   }

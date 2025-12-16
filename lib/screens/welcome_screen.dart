@@ -5,10 +5,8 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [const Image(image: AssetImage('assets/welcome_image.jpg'))],
+    return Scaffold(
+      body: Center(child: Image.asset('assets/images/welcome_image.jpg')),
     );
   }
 }
