@@ -18,7 +18,7 @@ class _AppState extends State<App> {
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(centerTitle: true, title: const Text('Home')),
+        appBar: AppBar(centerTitle: true, title: const Text('Task manager')),
         body: WelcomeScreen(),
       ),
     );
