@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_application_1/data/tasks.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -18,6 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final copiedTasks = tasks;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Tasks'),
@@ -50,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
               textInputAction: TextInputAction.done,
               onSubmitted: (value) {
                 if (value.trim().isNotEmpty) {
-                  print('Add task: $value');
                   _controller.clear();
                 }
               },
@@ -60,7 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 final task = _controller.text.trim();
                 if (task.isNotEmpty) {
-                  print('Add task: $task');
                   _controller.clear();
                 }
               },
@@ -80,12 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
             const Expanded(
-              child: Center(
-                child: Text(
-                  'No tasks yet. Add one above!',
-                  style: TextStyle(fontSize: 18, color: Colors.grey),
-                ),
-              ),
+              child: Center(child: Column(children: [
+              
+            ],)),
             ),
           ],
         ),
