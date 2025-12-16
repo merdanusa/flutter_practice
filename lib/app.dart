@@ -14,7 +14,9 @@ class _AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(centerTitle: true, title: const Text('Home')),
-        body: Center(child: TextButton(child: Text("Run"))),
+        body: Center(
+          child: TextButton(onPressed: () {}, child: Text("Run")),
+        ),
       ),
     );
   }
