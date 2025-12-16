@@ -78,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                   setState(() {
                     _tasks.add(newTask);
+                    tasks.add(newTask);
                   });
                   _controller.clear();
                 }
