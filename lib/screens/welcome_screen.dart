@@ -8,9 +8,7 @@ class WelcomeScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        
-      ],
+      children: [const Image(image: AssetImage('assets/welcome_image.jpg'))],
     );
   }
 }
