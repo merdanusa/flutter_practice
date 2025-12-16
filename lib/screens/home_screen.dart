@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_application_1/models/task.dart';
 import 'package:flutter_application_1/data/tasks.dart';
+import 'package:flutter_application_1/widgets/input.dart';
+import 'package:flutter_application_1/widgets/button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,6 +27,22 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  void _addTask() {
+    final taskText = _controller.text.trim();
+    if (taskText.isNotEmpty) {
+      final newTask = Task(
+        id: _tasks.length + 1,
+        title: taskText,
+        isCompleted: false,
+      );
+      setState(() {
+        _tasks.add(newTask);
+        tasks.add(newTask);
+      });
+      _controller.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,62 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
+            Input(
               controller: _controller,
-              decoration: InputDecoration(
-                labelText: 'New Task',
-                hintText: 'What needs to be done?',
-                filled: true,
-                fillColor: Colors.grey[100],
-                prefixIcon: const Icon(Icons.task_alt),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-              ),
-              textInputAction: TextInputAction.done,
-              onSubmitted: (value) {
-                if (value.trim().isNotEmpty) {
-                  _controller.clear();
-                }
-              },
+              label: 'New Task',
+              placeholder: 'What needs to be done?',
             ),
             const SizedBox(height: 16),
-            FilledButton.icon(
-              onPressed: () {
-                final taskText = _controller.text.trim();
-                if (taskText.isNotEmpty) {
-                  final newTask = Task(
-                    id: _tasks.length + 1,
-                    title: taskText,
-                    isCompleted: false,
-                  );
-                  setState(() {
-                    _tasks.add(newTask);
-                    tasks.add(newTask);
-                  });
-                  _controller.clear();
-                }
-              },
-
-              icon: const Icon(Icons.add, size: 28),
-              label: const Text(
-                'Add Task',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              style: FilledButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-            ),
+            Button(onPressed: _addTask, label: 'Add Task'),
             const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
