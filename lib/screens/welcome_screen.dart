@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -30,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
               const Spacer(),
 
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () => context.go('/'),
                 icon: const Icon(Icons.arrow_right_alt),
                 label: const Text('Move to app'),
                 style: TextButton.styleFrom(
