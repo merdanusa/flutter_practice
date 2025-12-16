@@ -28,8 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final copiedTasks = tasks;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Tasks'),
