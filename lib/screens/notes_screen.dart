@@ -26,21 +26,16 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
       body: Container(
         margin: EdgeInsets.all(20),
-        child: Expanded(
-          child: Column(
-            children: [
-              ListView.builder(
-                itemCount: notes.length,
-                itemBuilder: (context, index) {
-                  final note = notes[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Block(title: note.title, content: note.content),
-                  );
-                },
-              ),
-            ],
-          ),
+        child: ListView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: notes.length,
+          itemBuilder: (context, index) {
+            final note = notes[index];
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Block(title: note.title, content: note.content),
+            );
+          },
         ),
       ),
     );
