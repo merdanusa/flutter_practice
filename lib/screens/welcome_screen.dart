@@ -30,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
               const Spacer(),
 
               TextButton.icon(
-                onPressed: () => context.goNamed('tasks'),
+                onPressed: () => context.go('/app/tasks'),
                 icon: const Icon(Icons.arrow_right_alt),
                 label: const Text('Move to app'),
                 style: TextButton.styleFrom(
