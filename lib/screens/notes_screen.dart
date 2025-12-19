@@ -35,20 +35,22 @@ class _NotesScreenState extends State<NotesScreen> {
         onPressed: () {},
         child: Icon(Icons.add, color: Colors.white),
       ),
-      body: Container(
-        margin: EdgeInsets.all(20),
-        child: ListView.builder(
-          physics: BouncingScrollPhysics(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
           itemCount: notes.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            childAspectRatio: 1,
+          ),
           itemBuilder: (context, index) {
-            final note = notes[index];
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Block(
-                title: note.title,
-                content: note.content,
-                color: colors[index % colors.length],
-              ),
+            final block = notes[index];
+            return Block(
+              title: block.title,
+              content: block.content,
+              color: colors[index % colors.length],
             );
           },
         ),
