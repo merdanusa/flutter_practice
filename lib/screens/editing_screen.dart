@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 class NoteEditingScreen extends StatefulWidget {
   final Function(String title, String content) onSave;
+  final String title;
+  final String content;
   final VoidCallback onCancel;
 
   const NoteEditingScreen({
     super.key,
     required this.onSave,
     required this.onCancel,
+    required this.title,
+    required this.content,
   });
 
   @override

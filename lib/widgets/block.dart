@@ -6,11 +6,14 @@ class Block extends StatelessWidget {
     required this.title,
     required this.content,
     required this.color,
+    required this.onTap,
   });
 
   final String title;
   final String content;
   final Color color;
+
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {

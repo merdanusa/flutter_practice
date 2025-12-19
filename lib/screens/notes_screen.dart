@@ -17,6 +17,7 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
   bool isEditing = false;
+  int? editingIndex;
 
   List<Color> colors = [
     Colors.orangeAccent,
@@ -26,6 +27,32 @@ class _NotesScreenState extends State<NotesScreen> {
     Colors.tealAccent,
     Colors.indigoAccent,
   ];
+
+  void _startEditing({int? index}) {
+    setState(() {
+      isEditing = true;
+      editingIndex = index;
+    });
+  }
+
+  void _cancelEditing() {
+    setState(() {
+      isEditing = false;
+      editingIndex = null;
+    });
+  }
+
+  void _saveNote(String title, String content) {
+    setState(() {
+      if (editingIndex == null) {
+        notes.add(Note(title: title, content: content));
+      } else {
+        notes[editingIndex!] = Note(title: title, content: content);
+      }
+      isEditing = false;
+      editingIndex = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +65,7 @@ class _NotesScreenState extends State<NotesScreen> {
         foregroundColor: Colors.black87,
         leading: isEditing
             ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    isEditing = false;
-                  });
-                },
+                onPressed: _cancelEditing,
                 icon: const Icon(Icons.close),
               )
             : null,
@@ -51,26 +74,15 @@ class _NotesScreenState extends State<NotesScreen> {
           ? null
           : FloatingActionButton(
               backgroundColor: Colors.deepPurple,
-              onPressed: () {
-                setState(() {
-                  isEditing = true;
-                });
-              },
+              onPressed: () => _startEditing(),
               child: const Icon(Icons.add, color: Colors.white),
             ),
       body: isEditing
           ? NoteEditingScreen(
-              onSave: (title, content) {
-                setState(() {
-                  notes.add(Note(title: title, content: content));
-                  isEditing = false;
-                });
-              },
-              onCancel: () {
-                setState(() {
-                  isEditing = false;
-                });
-              },
+              title: editingIndex != null ? notes[editingIndex!].title : '',
+              content: editingIndex != null ? notes[editingIndex!].content : '',
+              onSave: _saveNote,
+              onCancel: _cancelEditing,
             )
           : Padding(
               padding: const EdgeInsets.all(12.0),
@@ -110,14 +122,12 @@ class _NotesScreenState extends State<NotesScreen> {
                             childAspectRatio: 0.92,
                           ),
                       itemBuilder: (context, index) {
-                        final block = notes[index];
+                        final note = notes[index];
                         return Block(
-                          title: block.title,
-                          content: block.content,
+                          title: note.title,
+                          content: note.content,
                           color: colors[index % colors.length],
-                          // onTap: () {
-                          //   // Optional: navigate to detail/edit existing note
-                          // },
+                          onTap: () => _startEditing(index: index),
                         );
                       },
                     ),
