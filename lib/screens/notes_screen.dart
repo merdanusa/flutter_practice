@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter_application_1/data/notes.dart';
+import 'package:flutter_application_1/models/note.dart';
 import 'package:flutter_application_1/screens/editing_screen.dart';
 import 'package:flutter_application_1/widgets/block.dart';
 
@@ -22,6 +23,8 @@ class _NotesScreenState extends State<NotesScreen> {
     Colors.blueAccent,
     Colors.purpleAccent,
     Colors.pinkAccent,
+    Colors.tealAccent,
+    Colors.indigoAccent,
   ];
 
   @override
@@ -32,45 +35,92 @@ class _NotesScreenState extends State<NotesScreen> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            setState(() {
-              isEditing = false;
-            });
-          },
-          icon: Icon(Icons.arrow_back),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple,
-        onPressed: () {
-          setState(() {
-            isEditing = true;
-          });
-        },
-        child: Icon(Icons.add, color: Colors.white),
-      ),
-      body: isEditing
-          ? NoteEditingScreen()
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridView.builder(
-                itemCount: notes.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 1,
-                ),
-                itemBuilder: (context, index) {
-                  final block = notes[index];
-                  return Block(
-                    title: block.title,
-                    content: block.content,
-                    color: colors[index % colors.length],
-                  );
+        foregroundColor: Colors.black87,
+        leading: isEditing
+            ? IconButton(
+                onPressed: () {
+                  setState(() {
+                    isEditing = false;
+                  });
                 },
-              ),
+                icon: const Icon(Icons.close),
+              )
+            : null,
+      ),
+      floatingActionButton: isEditing
+          ? null
+          : FloatingActionButton(
+              backgroundColor: Colors.deepPurple,
+              onPressed: () {
+                setState(() {
+                  isEditing = true;
+                });
+              },
+              child: const Icon(Icons.add, color: Colors.white),
+            ),
+      body: isEditing
+          ? NoteEditingScreen(
+              onSave: (title, content) {
+                setState(() {
+                  notes.add(Note(title: title, content: content));
+                  isEditing = false;
+                });
+              },
+              onCancel: () {
+                setState(() {
+                  isEditing = false;
+                });
+              },
+            )
+          : Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: notes.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.note_add,
+                            size: 80,
+                            color: Colors.grey[400],
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'No notes yet',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Tap the + button to create one',
+                            style: TextStyle(color: Colors.grey[500]),
+                          ),
+                        ],
+                      ),
+                    )
+                  : GridView.builder(
+                      itemCount: notes.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            childAspectRatio: 0.92,
+                          ),
+                      itemBuilder: (context, index) {
+                        final block = notes[index];
+                        return Block(
+                          title: block.title,
+                          content: block.content,
+                          color: colors[index % colors.length],
+                          // onTap: () {
+                          //   // Optional: navigate to detail/edit existing note
+                          // },
+                        );
+                      },
+                    ),
             ),
     );
   }
