@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class NoteEditingScreen extends StatefulWidget {
-  final Function(String title, String content) onSave;
   final String title;
   final String content;
+  final Function(String title, String content) onSave;
   final VoidCallback onCancel;
 
   const NoteEditingScreen({
     super.key,
-    required this.onSave,
-    required this.onCancel,
     required this.title,
     required this.content,
+    required this.onSave,
+    required this.onCancel,
   });
 
   @override
@@ -19,16 +19,18 @@ class NoteEditingScreen extends StatefulWidget {
 }
 
 class _NoteEditingScreenState extends State<NoteEditingScreen> {
-  final _titleController = TextEditingController();
-  final _contentController = TextEditingController();
+  late final _titleController = TextEditingController(text: widget.title);
+  late final _contentController = TextEditingController(text: widget.content);
   final _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _focusNode.requestFocus();
-    });
+    if (widget.title.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _focusNode.requestFocus();
+      });
+    }
   }
 
   @override
