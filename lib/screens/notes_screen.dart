@@ -33,7 +33,10 @@ class _NotesScreenState extends State<NotesScreen> {
                 itemCount: notes.length,
                 itemBuilder: (context, index) {
                   final note = notes[index];
-                  return Block(title: note.title, content: note.context);
+                  return Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Block(title: note.title, content: note.content),
+                  );
                 },
               ),
             ],

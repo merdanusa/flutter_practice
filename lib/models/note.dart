@@ -1,6 +1,6 @@
 class Note {
-  const Note({required this.title, required this.context});
+  const Note({required this.title, required this.content});
 
   final String title;
-  final String context;
+  final String content;
 }
