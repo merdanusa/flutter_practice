@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 class Block extends StatelessWidget {
-  const Block({super.key, required this.title, required this.content});
+  const Block({
+    super.key,
+    required this.title,
+    required this.content,
+    required this.color,
+  });
 
   final String title;
   final String content;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,7 @@ class Block extends StatelessWidget {
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.orangeAccent,
+        color: color,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
