@@ -15,6 +15,7 @@ class Block extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 150,
       height: 150,
       margin: EdgeInsets.all(8),
       padding: EdgeInsets.all(15),
