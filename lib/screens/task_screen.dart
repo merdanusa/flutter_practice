@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 20),
             Expanded(
               child: _tasks.isEmpty
-                  ? Text("No any hobbies try to add them!")
+                  ? Center(child: Text("No any hobbies try to add them!"))
                   : ListView.builder(
                       itemCount: _tasks.length,
                       itemBuilder: (context, index) {
