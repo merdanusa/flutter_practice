@@ -25,7 +25,7 @@ class _NotesScreenState extends State<NotesScreen> {
       body: Container(
         margin: EdgeInsets.all(20),
         child: Column(children: [
-            
+            Expanded(child: )
           ],
         ),
       ),
