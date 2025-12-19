@@ -66,31 +66,33 @@ class _HomeScreenState extends State<HomeScreen> {
             Button(onPressed: _addTask, label: 'Add Task', primary: false),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: _tasks.length,
-                itemBuilder: (context, index) {
-                  final task = _tasks[index];
-                  return ListTile(
-                    title: Text(task.title),
-                    leading: Checkbox(
-                      value: task.isCompleted,
-                      onChanged: (value) {
-                        setState(() {
-                          task.isCompleted = value!;
-                        });
+              child: _tasks.isEmpty
+                  ? Text("No any hobbies try to add them!")
+                  : ListView.builder(
+                      itemCount: _tasks.length,
+                      itemBuilder: (context, index) {
+                        final task = _tasks[index];
+                        return ListTile(
+                          title: Text(task.title),
+                          leading: Checkbox(
+                            value: task.isCompleted,
+                            onChanged: (value) {
+                              setState(() {
+                                task.isCompleted = value!;
+                              });
+                            },
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              setState(() {
+                                _tasks.removeAt(index);
+                              });
+                            },
+                          ),
+                        );
                       },
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        setState(() {
-                          _tasks.removeAt(index);
-                        });
-                      },
-                    ),
-                  );
-                },
-              ),
             ),
           ],
         ),

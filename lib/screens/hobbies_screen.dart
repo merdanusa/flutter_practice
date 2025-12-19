@@ -62,13 +62,25 @@ class _HobbiesScreen extends State<HobbiesScreen> {
             Button(onPressed: _addHobby, label: 'Add Hobby', primary: true),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: _hobbies.length,
-                itemBuilder: (context, index) {
-                  final task = _hobbies[index];
-                  return ListTile(title: Text(task.title));
-                },
-              ),
+              child: _hobbies.isEmpty
+                  ? Center(child: Text("No any hobbies try to add them!"))
+                  : ListView.builder(
+                      itemCount: _hobbies.length,
+                      itemBuilder: (context, index) {
+                        final task = _hobbies[index];
+                        return ListTile(
+                          title: Text(task.title),
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              setState(() {
+                                _hobbies.removeAt(index);
+                              });
+                            },
+                          ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),
