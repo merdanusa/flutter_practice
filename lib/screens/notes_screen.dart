@@ -10,6 +10,25 @@ class NotesScreen extends StatefulWidget {
 class _NotesScreenState extends State<NotesScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Notes'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
+        onPressed: () {},
+        child: Icon(Icons.add, color: Colors.white),
+      ),
+      body: Container(
+        margin: EdgeInsets.all(20),
+        child: Column(children: [
+            
+          ],
+        ),
+      ),
+    );
   }
 }
