@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter_application_1/data/notes.dart';
+import 'package:flutter_application_1/screens/editing_screen.dart';
 import 'package:flutter_application_1/widgets/block.dart';
 
 final random = Random();
@@ -14,6 +15,8 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
+  bool isEditing = false;
+
   List<Color> colors = [
     Colors.orangeAccent,
     Colors.blueAccent,
@@ -29,32 +32,46 @@ class _NotesScreenState extends State<NotesScreen> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            setState(() {
+              isEditing = false;
+            });
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            isEditing = true;
+          });
+        },
         child: Icon(Icons.add, color: Colors.white),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          itemCount: notes.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-            childAspectRatio: 1,
-          ),
-          itemBuilder: (context, index) {
-            final block = notes[index];
-            return Block(
-              title: block.title,
-              content: block.content,
-              color: colors[index % colors.length],
-            );
-          },
-        ),
-      ),
+      body: isEditing
+          ? NoteEditingScreen()
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
+                itemCount: notes.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 1,
+                ),
+                itemBuilder: (context, index) {
+                  final block = notes[index];
+                  return Block(
+                    title: block.title,
+                    content: block.content,
+                    color: colors[index % colors.length],
+                  );
+                },
+              ),
+            ),
     );
   }
 }
