@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/data/notes.dart';
+import 'package:flutter_application_1/widgets/block.dart';
 
 class NotesScreen extends StatefulWidget {
   const NotesScreen({super.key});
@@ -24,9 +26,18 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
       body: Container(
         margin: EdgeInsets.all(20),
-        child: Column(children: [
-            Expanded(child: )
-          ],
+        child: Expanded(
+          child: Column(
+            children: [
+              ListView.builder(
+                itemCount: notes.length,
+                itemBuilder: (context, index) {
+                  final note = notes[index];
+                  return Block(title: note.title, content: note.context);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
