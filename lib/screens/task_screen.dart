@@ -80,6 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                     ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        setState(() {
+                          _tasks.removeAt(index);
+                        });
+                      },
+                    ),
                   );
                 },
               ),
