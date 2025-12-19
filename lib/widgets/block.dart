@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Block extends StatelessWidget {
+  final String title;
+  final String content;
+  final Color color;
+  final VoidCallback onTap;
+
   const Block({
     super.key,
     required this.title,
@@ -9,44 +14,41 @@ class Block extends StatelessWidget {
     required this.onTap,
   });
 
-  final String title;
-  final String content;
-  final Color color;
-
-  final Function() onTap;
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 150,
-      margin: EdgeInsets.all(8),
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: color,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: Colors.white,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              content,
-              maxLines: 4,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color.withOpacity(0.6), width: 2),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
-          ),
-        ],
+            const SizedBox(height: 10),
+            Expanded(
+              child: Text(
+                content,
+                style: const TextStyle(fontSize: 15, color: Colors.black74),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
