@@ -42,7 +42,7 @@ class Block extends StatelessWidget {
             Expanded(
               child: Text(
                 content,
-                style: const TextStyle(fontSize: 15, color: Colors.black74),
+                style: const TextStyle(fontSize: 15, color: Colors.black87),
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
               ),
